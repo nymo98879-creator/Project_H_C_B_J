@@ -100,3 +100,8 @@ function updateCart(){
         
         cartCount.textContent = card.length
 }
+
+function test(){
+    console.log("kjhgfds");
+    
+}
