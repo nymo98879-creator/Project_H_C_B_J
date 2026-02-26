@@ -46,12 +46,12 @@ searchInput.addEventListener("keyup", () => {
 });
 
 // ================= ADD TO CART =================
-function addToCart(id){
+function addToCart(id) {
     const exsiting = card.find(item => item.id === id);
 
-    if(exsiting){
+    if (exsiting) {
         exsiting.quantity++;
-    }else{
+    } else {
         const product = products.find(p => p.id === id);
         card.push({ ...product, quantity: 1 });
     }
@@ -61,14 +61,14 @@ function addToCart(id){
         icon: "success",
         title: "Added to cart ☕",
         confirmButtonText: "OK",
-       
+
     });
 }
 
-function updateCart(){
+function updateCart() {
     cartItem.innerHTML = ""
     let total = 0
-    card.forEach((item, index)=>{
+    card.forEach((item, index) => {
         total += item.price * item.quantity
         cartItem.innerHTML = `
              <div class="border-bottom pb-3 mb-3">
@@ -87,7 +87,7 @@ function updateCart(){
                 </div>
             </div>
         `;
-       
+
     });
     cartItem.innerHTML += `
         <div class="border-top pt-3">
@@ -97,11 +97,39 @@ function updateCart(){
             </button>
         </div>
         `;
-        
-        cartCount.textContent = card.length
+
+    cartCount.textContent = card.length
 }
 
-function test(){
-    console.log("kjhgfds");
-    
+// ================= CHANGE QTY =================
+function changeQty(index, change) {
+    card[index].quantity += change
+
+    if (card[index] <= 0) {
+        card.slice(index, 1)
+    }
+    updateCart()
+}
+
+// ================= REMOVE ITEM =================
+function removeItem(index){
+    card.splice(index, 1)
+    updateCart()
+}
+
+// ================= REMOVE ITEM =================
+
+function checkout(){
+    if(card.length === 0){
+        Swal.fire("Cart is Empty");
+        return;
+    }
+    Swal.fire({
+        icon: "success",
+        title: "Order Successful ☕",
+        text: "Your items are on the way!"
+    });
+
+    card = [];
+    updateCart();
 }
